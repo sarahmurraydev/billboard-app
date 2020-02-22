@@ -13,6 +13,9 @@ class Chart extends React.Component {
         axios.get(`${API_URL}/give-me-charts/2019-07-20`)
             .then(response => {
                 console.log("got a response!", response)
+                this.setState({
+                    chart: response
+                })
             })
             .catch(err => {
                 console.log("there was a problem!", err)
@@ -20,7 +23,14 @@ class Chart extends React.Component {
     }
 
     render(){
-        return <button onClick={this.getChartData}>yeaaaaaaah buddy</button>
+        return <div style={{width: '50%'}}>
+            <button onClick={this.getChartData}>Click here to get the chart!</button>
+            {!!this.state.chart && <ol>
+                {this.state.chart.data.entries.map((entry, i) => {
+                    return <li key={`${this.state.chart.data.date}-#${i}`}>{entry.artist} - {entry.title}</li>
+                })}
+            </ol>}
+        </div>
     }
 }
 
