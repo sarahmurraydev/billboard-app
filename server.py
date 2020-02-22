@@ -8,9 +8,10 @@ app = Flask( __name__ )
 def home():
     return "Hello World!"
 
-@app.route('/give-me-charts/<date>')
-def charts(date):
-    chart = billboard.ChartData('hot-100', date)
+@app.route('/give-me-charts/<name>/<date>')
+def charts(name, date):
+    # add data validation on name and date
+    chart = billboard.ChartData(name, date)
     return chart.json()
 
 
