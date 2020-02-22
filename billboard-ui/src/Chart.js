@@ -14,7 +14,7 @@ class Chart extends React.Component {
             .then(response => {
                 console.log("got a response!", response)
                 this.setState({
-                    chart: response
+                    chart: response.data
                 })
             })
             .catch(err => {
@@ -23,12 +23,15 @@ class Chart extends React.Component {
     }
 
     render(){
-        return <div style={{width: '50%'}}>
-            <button onClick={this.getChartData}>Click here to get the chart!</button>
-            {!!this.state.chart && <ol>
-                {this.state.chart.data.entries.map((entry, i) => {
-                    return <li key={`${this.state.chart.data.date}-#${i}`}>{entry.artist} - {entry.title}</li>
-                })}
+        let chartData = this.state.chart
+        return <div style={{width: '75%'}} className="chart-data">
+            <button onClick={this.getChartData}>Click here to get the data!</button>
+            {!!chartData && <div>
+                <h3>Now Viewing the Billboard {chartData.name.toUpperCase()} for the week of {chartData.date}</h3>
+                <ol>
+                    {chartData.entries.map((entry, i) => {
+                        return <li key={`${chartData.date}-#${i}`}>{entry.artist} - {entry.title}</li>
+                    })}
             </ol>}
         </div>
     }
